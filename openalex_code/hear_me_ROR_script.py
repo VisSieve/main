@@ -146,7 +146,7 @@ def add_institution_to_db(con: db.DuckDBPyConnection, institution_ror: str = Non
 
     Args:
         con (db.DuckDBPyConnection): connection to the database
-        institution_roi (str): ROR identification of the institution
+        institution_ror (str): ROR identification of the institution
 
     Returns:
         int: id of the institution
@@ -233,7 +233,6 @@ def populate_database(database_file: str, ror: str, years: range, content_root: 
                         con.execute(f"""INSERT INTO author VALUES ({a['author']['id'].split('A')[-1]}, '{a['author']['display_name'].replace("'", "")}');""")
                     except db.ConstraintException:
                         pass
-                        continue
 
                     try:
                         con.execute(f"INSERT INTO contribution VALUES ({a['author']['id'].split('A')[-1]}, {pub['id'].split('W')[-1]});")
