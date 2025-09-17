@@ -1,4 +1,6 @@
 .vscode/settings.json
 documentation/*
 *.db
+*.sif
+*.pyc
 
