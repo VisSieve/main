@@ -2,7 +2,7 @@ from pathlib import Path
 import tqdm
 import duckdb as db
 
-connection = db.connect("publications_princeton.db")
+connection = db.connect("publications.db")
 
 # for each pdf that we have actual figures for we will create a bunch of entries 
 
