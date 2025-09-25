@@ -1,16 +1,24 @@
 from mmdet.apis import init_detector, inference_detector
 from PIL import Image
 from pathlib import Path
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("fig_path")
+parser.add_argument("prob")
+args = parser.parse_args()
+
 # add single test image 
 classes = ('flow_diagram', 'scatterplot', 'bar_chart', 'graph', 'treemap', 'table', 'line_chart', 'tree', 'small_multiple', 'heatmap', 'matrix', 'map', 'pie_chart', 'sankey_diagram', 'area_chart', 'proportional_area_chart', 'glyph_based', 'stripe_graph', 'parallel_coordinate', 'sunburst_icicle', 'unit_visualization', 'polar_plot', 'error_bar', 'box_plot', 'sector_chart', 'word_cloud', 'donut_chart', 'hierarchical_edge_bundling', 'chord_diagram', 'storyline')
-figure = next(Path("/xdisk/chrisreidy/baylyd/vis_sieve/vis-sieve/pdf_grabbing/pdf_symlinks").glob("*Figure*.png"))
+#figure = next(Path("/xdisk/chrisreidy/baylyd/vis_sieve/vis-sieve/pdf_grabbing/pdf_symlinks").glob("*Figure*.png"))
+figure = Path(args.fig_path)
 
 config_file = '/visimages-detection/work_dirs/faster_rcnn_r50_fpn_1x_Visualization_Detect/faster_rcnn_r50_fpn_1x_Visualization_Detect.py'
 
 checkpoint_file = '/visimages-detection/work_dirs/faster_rcnn_r50_fpn_1x_Visualization_Detect/visimages-best.pth'
 model = init_detector(config_file, checkpoint_file, device='cpu')  # or device='cuda:0'
 # limit the export of subsections that aren't high enough prob
-prob_threshold = .3
+prob_threshold = float(args.prob)
 
 def subset_image(m,figure_path):
   # this returns a list of 30 elements (matching number of chart classes)
